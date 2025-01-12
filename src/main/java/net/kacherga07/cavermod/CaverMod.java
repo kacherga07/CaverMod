@@ -1,7 +1,9 @@
 package net.kacherga07.cavermod;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.level.block.Blocks;
+import net.kacherga07.cavermod.block.ModBlocks;
+import net.kacherga07.cavermod.item.ModCreativeModTabs;
+import net.kacherga07.cavermod.item.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -12,7 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 @Mod(CaverMod.MOD_ID)
@@ -23,10 +24,15 @@ public class CaverMod {
     public CaverMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModCreativeModTabs.register(modEventBus);
+
+        ModBlocks.register(modEventBus);
+
+        ModItems.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
-
         modEventBus.addListener(this::addCreative);
 
 
