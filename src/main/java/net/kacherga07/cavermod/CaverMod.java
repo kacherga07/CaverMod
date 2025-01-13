@@ -2,8 +2,11 @@ package net.kacherga07.cavermod;
 
 import com.mojang.logging.LogUtils;
 import net.kacherga07.cavermod.block.ModBlocks;
+import net.kacherga07.cavermod.entity.ModEntities;
+import net.kacherga07.cavermod.entity.client.CaverManRenderer;
 import net.kacherga07.cavermod.item.ModCreativeModTabs;
 import net.kacherga07.cavermod.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -26,9 +29,11 @@ public class CaverMod {
 
         ModCreativeModTabs.register(modEventBus);
 
+        ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
-        ModItems.register(modEventBus);
+        ModEntities.register(modEventBus);
+
 
         modEventBus.addListener(this::commonSetup);
 
@@ -58,6 +63,7 @@ public class CaverMod {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.CAVERMAN.get(), CaverManRenderer::new);
 
         }
     }
